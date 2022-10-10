@@ -10,8 +10,7 @@ module.exports = {
     es6: true
   },
   extends: [
-    'react-app',
-    'react-app/jest'
+    'react-app'
   ],
   // add your custom rules here
   rules: {
