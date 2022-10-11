@@ -2,13 +2,15 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:39
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-10 14:31:43
+ * @LastEditTime: 2022-10-11 11:27:29
  * @FilePath: \react-admin\src\views\home\Home.js
  */
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>Home</div>
   );
-}
+};
+
+export default memo(Home);

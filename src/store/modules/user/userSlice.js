@@ -2,14 +2,14 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 16:19:00
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-10 16:26:34
+ * @LastEditTime: 2022-10-11 11:10:29
  * @FilePath: \react-admin\src\store\modules\user\userSlice.js
  */
 import { createSlice } from '@reduxjs/toolkit';
 
 // 初始化参数
 const initialState = {
-  theme: '#25b864',
+  theme: '#4591f9',
   userInfo: {}
 };
 

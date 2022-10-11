@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 22:18:45
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-10 22:22:05
- * @FilePath: /react-admin/src/components/loading-animation.js
+ * @LastEditTime: 2022-10-11 11:31:03
+ * @FilePath: \react-admin\src\components\LoadingAnimation.js
  */
 import styled, { keyframes } from 'styled-components';
 
@@ -18,8 +18,8 @@ const animationBg = keyframes`
 `;
 
 export default styled.div`
-  width: 350px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
   background-image: linear-gradient(
     to right,
