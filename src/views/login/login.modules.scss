@@ -2,7 +2,46 @@
   position: relative;
   top: 50%;
   left: 50%;
-  width: 500px;
-  min-height: 400px;
+  width: 340px;
+  min-height: 300px;
   transform: translate(-50%, -50%);
+
+  .login-content {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  }
+
+  .ant-tabs-nav-list {
+    width: 100%;
+
+    .ant-tabs-tab {
+      display: flex;
+    justify-content: center;
+      flex: 1;
+      text-align: center;
+    }
+
+    .ant-tabs-tab:nth-child(1) {
+      border-left: 1px solid #fff;
+    }
+    .ant-tabs-tab:nth-child(2) {
+      border-right: 1px solid #fff;
+    }
+  }
+
+  .login-submit {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+.userLogin,
+.userPhone {
+  padding: 15px;
+  padding-bottom: 0px;
+
+  .userLogin-text{
+    color: var(--ant-primary-color);
+  }
 }

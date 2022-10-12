@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-11 23:17:59
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-11 23:28:10
+ * @LastEditTime: 2022-10-12 23:15:51
  * @FilePath: /react-admin/src/hooks/useThrottle.js
  */
 import { throttle } from '@/utils/lodashChunk';
@@ -14,8 +14,8 @@ import { throttle } from '@/utils/lodashChunk';
  * @returns
  */
 export const useThrottle = (fn, delay = 800) => {
-  return throttle(() => {
-    fn();
+  return throttle((...arg) => {
+    fn(...arg);
   },
   delay,
   { 'trailing': false });
