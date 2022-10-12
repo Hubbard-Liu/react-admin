@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 22:18:45
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-11 11:31:03
- * @FilePath: \react-admin\src\components\LoadingAnimation.js
+ * @LastEditTime: 2022-10-12 17:36:43
+ * @FilePath: \react-admin\src\components\LoadingAnimation.jsx
  */
 import styled, { keyframes } from 'styled-components';
 
