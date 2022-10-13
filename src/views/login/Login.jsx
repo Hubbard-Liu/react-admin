@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-12 23:20:58
- * @FilePath: /react-admin/src/views/login/Login.jsx
+ * @LastEditTime: 2022-10-13 17:58:53
+ * @FilePath: \react-admin\src\views\login\Login.jsx
  */
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,7 @@ import loginStyle from './login.modules.scss';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
   // 主题设置
   const themeList = [
@@ -53,8 +54,8 @@ const Login = () => {
         shape='circle'
         size='small'
         color={item.color}
-        key={item.color}
-        style={{ backgroundColor: item.color }}
+        key={item.name}
+        style={{ backgroundColor: item.color, marginRight: '5px' }}
         onClick={() => handleTheme(item.color)}
       >
         {' '}
@@ -62,6 +63,7 @@ const Login = () => {
     );
   });
 
+  // tab内容
   const tabList = [
     {
       label: (
@@ -71,7 +73,7 @@ const Login = () => {
         </span>
       ),
       key: 'login',
-      children: <UserLogin />
+      children: <UserLogin form={form}/>
     },
     {
       label: (
@@ -81,17 +83,19 @@ const Login = () => {
         </span>
       ),
       key: '2',
-      children: <UserPhone />
+      children: <UserPhone form={form}/>
     }
   ];
 
-  const handleClick = useThrottle(() => {});
+  const handleClick = useThrottle(() => {
+    // const params = form.getFieldsValue();
+  });
 
   return (
-    <>
-      <div className='theme'>{ThemeBtn}</div>
-      <div className='login' style={loginStyle}>
-        <div className='login-content'>
+    <div className='login' style={loginStyle}>
+      <div className='login-theme'>{ThemeBtn}</div>
+      <div className='login-content'>
+        <div className='login-tab'>
           <Tabs
             defaultActiveKey='login'
             type='card'
@@ -109,21 +113,32 @@ const Login = () => {
           登录
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 
-const UserLogin = () => {
-  const [form] = Form.useForm();
-
+const UserLogin = (props) => {
   const layout = {
     labelCol: { span: 3 },
     wrapperCol: { span: 21 }
   };
 
+  const passwordRule = (_, value) => {
+    const reg = new RegExp(
+      /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/
+    );
+    return reg.test(value)
+      ? Promise.resolve()
+      : Promise.reject(
+        new Error(
+          '最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'
+        )
+      );
+  };
+
   return (
     <div className='userLogin'>
-      <Form {...layout} form={form} name='userLogin'>
+      <Form {...layout} form={props.form} name='userLogin'>
         <Form.Item
           label='账号'
           name='username'
@@ -159,18 +174,7 @@ const UserLogin = () => {
             { required: true, message: '请输入密码' },
             {
               // 自定义校验
-              validator: (_, value) => {
-                const reg = new RegExp(
-                  /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/
-                );
-                return reg.test(value)
-                  ? Promise.resolve()
-                  : Promise.reject(
-                    new Error(
-                      '最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'
-                    )
-                  );
-              }
+              validator: passwordRule
             }
           ]}
         >
@@ -180,8 +184,6 @@ const UserLogin = () => {
         <Form.Item
           name='remember'
           valuePropName='checked'
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
         >
           <Checkbox className='userLogin-text'>记住密码</Checkbox>
         </Form.Item>
