@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-13 17:58:53
- * @FilePath: \react-admin\src\views\login\Login.jsx
+ * @LastEditTime: 2022-10-13 23:35:50
+ * @FilePath: /react-admin/src/views/login/Login.jsx
  */
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import { UserOutlined, MailOutlined } from '@ant-design/icons';
 import { setTheme } from '@/store/modules/user/userSlice';
 import { useThrottle } from '@hooks/useThrottle';
 import loginStyle from './login.modules.scss';
+import { API_Login } from '@/api/login/login';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -88,7 +89,14 @@ const Login = () => {
   ];
 
   const handleClick = useThrottle(() => {
-    // const params = form.getFieldsValue();
+    const params = form.getFieldsValue();
+    API_Login(params)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return (
@@ -123,18 +131,18 @@ const UserLogin = (props) => {
     wrapperCol: { span: 21 }
   };
 
-  const passwordRule = (_, value) => {
-    const reg = new RegExp(
-      /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/
-    );
-    return reg.test(value)
-      ? Promise.resolve()
-      : Promise.reject(
-        new Error(
-          '最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'
-        )
-      );
-  };
+  // const passwordRule = (_, value) => {
+  //   const reg = new RegExp(
+  //     /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/
+  //   );
+  //   return reg.test(value)
+  //     ? Promise.resolve()
+  //     : Promise.reject(
+  //       new Error(
+  //         '最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'
+  //       )
+  //     );
+  // };
 
   return (
     <div className='userLogin'>
@@ -171,11 +179,11 @@ const UserLogin = (props) => {
           name='password'
           required={false}
           rules={[
-            { required: true, message: '请输入密码' },
-            {
-              // 自定义校验
-              validator: passwordRule
-            }
+            { required: true, message: '请输入密码' }
+            // {
+            //   // 自定义校验
+            //   validator: passwordRule
+            // }
           ]}
         >
           <Input.Password />
