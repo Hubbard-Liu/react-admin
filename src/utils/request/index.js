@@ -2,14 +2,15 @@
  * @Author: Do not edit
  * @Date: 2022-10-13 23:02:51
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-13 23:37:39
+ * @LastEditTime: 2022-10-16 21:18:49
  * @FilePath: /react-admin/src/utils/request/index.js
  */
 import Axios from './axios';
+import { BASE_URL, TIME_OUT } from './config';
 
 const http = new Axios({
-  baseURL: 'https://mock.apifox.cn/m1/1752195-0-default',
-  timeout: 30000,
+  baseURL: BASE_URL,
+  timeout: TIME_OUT,
   // withCredentials: true,// 是否跨域携带cookie
   interceptors: {
     requestInterceptors: (res) => {

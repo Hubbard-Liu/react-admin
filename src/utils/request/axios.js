@@ -2,11 +2,12 @@
  * @Author: Do not edit
  * @Date: 2022-10-13 23:03:42
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-14 17:23:50
- * @FilePath: \react-admin\src\utils\request\axios.js
+ * @LastEditTime: 2022-10-16 19:07:41
+ * @FilePath: /react-admin/src/utils/request/axios.js
  */
 import axios from 'axios';
 import useLoadingSpin from '@hooks/useLoadingSpin';
+import { checkStatus } from './checkStatus';
 
 class Axios {
   static instance;
@@ -16,7 +17,7 @@ class Axios {
 
   constructor(config) {
     this.instance = axios.create(config);
-    this.interceptors = config.interceptors;
+    this.interceptors = config.interceptors;// 多个拦截器存储为数组
     this.showLoading = config.showLoading ?? true;
 
     // 实例拦截器
@@ -44,15 +45,13 @@ class Axios {
     this.instance.interceptors.response.use(
       (res) => {
         console.log('全局相应拦截器');
-        setTimeout(() => {
-          this.loading?.close();
-          this.loading = null;
-        }, 2000);
-        // const { data } = res;
-        // if (!data) {
-        //   checkStatus(400);
-        //   return Promise.reject(new Error(res.toString()));
-        // }
+        this.loading?.close();
+        this.loading = null;
+        const { code } = res.data;
+        if (code && code !== 200) {
+          checkStatus(code);
+          return Promise.reject(new Error(res.msg));
+        }
         return res.data;
       },
       (err) => {

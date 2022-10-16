@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-13 23:35:50
+ * @LastEditTime: 2022-10-16 18:56:07
  * @FilePath: /react-admin/src/views/login/Login.jsx
  */
 import React, { memo } from 'react';
@@ -13,7 +13,7 @@ import { UserOutlined, MailOutlined } from '@ant-design/icons';
 import { setTheme } from '@/store/modules/user/userSlice';
 import { useThrottle } from '@hooks/useThrottle';
 import loginStyle from './login.modules.scss';
-import { API_Login } from '@/api/login/login';
+import { API_Login } from '@/api/user/login';
 
 const Login = () => {
   const dispatch = useDispatch();
