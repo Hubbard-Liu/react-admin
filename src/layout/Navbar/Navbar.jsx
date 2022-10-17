@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:35
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-17 18:03:06
- * @FilePath: \react-admin\src\layout\Navbar\Navbar.jsx
+ * @LastEditTime: 2022-10-17 21:43:41
+ * @FilePath: /react-admin/src/layout/Navbar/Navbar.jsx
  */
 import React, { memo } from 'react';
 import { Layout } from 'antd';
@@ -23,7 +23,7 @@ const Navbar = (props) => {
 
   return (
     <>
-      <Header className='main-center-header'>
+      <Header className='wrapper-center-header'>
         <TargetCollapsed/>
       Header
       </Header>

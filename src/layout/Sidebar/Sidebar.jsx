@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-17 17:52:54
- * @FilePath: \react-admin\src\layout\Sidebar\Sidebar.jsx
+ * @LastEditTime: 2022-10-17 21:43:33
+ * @FilePath: /react-admin/src/layout/Sidebar/Sidebar.jsx
  */
 import React, { memo } from 'react';
 import { Layout } from 'antd';
@@ -23,7 +23,7 @@ const Sidebar = (props) => {
   return (
     <>
       <Sider
-        className='main-sider'
+        className='wrapper-sider'
         breakpoint={breakpoint}
         trigger={null}
         collapsible
