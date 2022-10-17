@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-16 23:32:14
- * @FilePath: /react-admin/src/router/index.js
+ * @LastEditTime: 2022-10-17 16:38:34
+ * @FilePath: \react-admin\src\router\index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -24,14 +24,23 @@ const routers = [
     element: lazyLoad('login/Login')
   },
   {
-    path: '/home',
-    element: lazyLoad('home/Home')
+    path: '/main',
+    element: lazyLoad('main/Main')
     // children: [],
   },
   // 重定向
   {
     path: '/',
-    element: <Navigate to='/login' />
+    element: <Navigate to='/main' />
+  },
+  // 404
+  {
+    path: '/error',
+    element: lazyLoad('error/Error')
+  },
+  {
+    path: '*',
+    element: <Navigate to='/error' />
   }
 ];
 

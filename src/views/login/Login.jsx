@@ -2,14 +2,15 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-16 18:56:07
- * @FilePath: /react-admin/src/views/login/Login.jsx
+ * @LastEditTime: 2022-10-17 16:18:07
+ * @FilePath: \react-admin\src\views\login\Login.jsx
  */
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Tabs, Checkbox, Form, Input } from 'antd';
 import { UserOutlined, MailOutlined } from '@ant-design/icons';
+import to from 'await-to-js';
 import { setTheme } from '@/store/modules/user/userSlice';
 import { useThrottle } from '@hooks/useThrottle';
 import loginStyle from './login.modules.scss';
@@ -17,6 +18,7 @@ import { API_Login } from '@/api/user/login';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
   // 主题设置
@@ -88,15 +90,14 @@ const Login = () => {
     }
   ];
 
-  const handleClick = useThrottle(() => {
-    const params = form.getFieldsValue();
-    API_Login(params)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleClick = useThrottle(async() => {
+    const result = await form.validateFields().catch(err => err);
+    if (result?.errorFields?.length) return;
+    const [err, res] = await to(API_Login(result));
+    if (err) return;
+    navigate('/home', {
+      state: res.data
+    });
   });
 
   return (
