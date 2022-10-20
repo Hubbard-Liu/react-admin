@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-19 15:16:22
- * @FilePath: \react-admin\src\router\index.js
+ * @LastEditTime: 2022-10-20 23:04:15
+ * @FilePath: /react-admin/src/router/index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -22,8 +22,53 @@ const lazyLoad = (componentName) => {
 // const Login = lazy(() => import(/* webpackChunkName: "login" */ '@/views/login/Login'));
 // const Home = lazy(() => import(/* webpackChunkName: "home" */ '@/views/home/Home'));
 
-// 路由表
 const routers = [
+  {
+    index: true,
+    path: 'main',
+    name: '主页',
+    element: lazyLoad('main/Main')
+    // path: '/',
+    // name: '主页',
+    // element: lazyLoad('Wrapper/Wrapper'),
+    // children: [
+    //   {
+    //     index: true,
+    //     path: 'main',
+    //     name: '主页',
+    //     element: lazyLoad('main/Main')
+    //   }
+    //   // {
+    //   //   index: true,
+    //   //   path: 'dashboard',
+    //   //   name: '数据大屏',
+    //   //   element: lazyLoad('dashboard/Dashboard')
+    //   // }
+    // ]
+  },
+  {
+    index: true,
+    path: 'dashboard',
+    name: '数据大屏',
+    element: lazyLoad('dashboard/Dashboard')
+  }
+  // {
+  //   path: '/dashboard',
+  //   name: '数据大屏',
+  //   element: lazyLoad('Wrapper/Wrapper'),
+  //   children: [
+  //     {
+  //       index: true,
+  //       path: 'dashboard',
+  //       name: '数据大屏',
+  //       element: lazyLoad('dashboard/Dashboard')
+  //     }
+  //   ]
+  // }
+];
+
+// 根路由表
+const rootRouters = [
   {
     path: '/login',
     name: '登录',
@@ -35,14 +80,7 @@ const routers = [
     path: '/',
     name: '主页',
     element: lazyLoad('Wrapper/Wrapper'),
-    children: [
-      {
-        index: true,
-        path: 'main',
-        name: '主页',
-        element: lazyLoad('main/Main')
-      }
-    ]
+    children: routers
   },
   // 404
   {
@@ -59,4 +97,4 @@ const routers = [
   }
 ];
 
-export default routers;
+export { routers, rootRouters };

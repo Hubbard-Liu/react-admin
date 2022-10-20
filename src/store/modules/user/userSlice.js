@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 16:19:00
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 18:13:12
- * @FilePath: \react-admin\src\store\modules\user\userSlice.js
+ * @LastEditTime: 2022-10-20 21:59:56
+ * @FilePath: /react-admin/src/store/modules/user/userSlice.js
  */
 import { createSlice } from '@reduxjs/toolkit';
 import { API_Login } from '@/api/user/login';
@@ -13,7 +13,8 @@ const initialState = {
   theme: '#4591f9',
   userInfo: {},
   userRoutes: [],
-  token: ''
+  token: '',
+  historyBack: ''
 };
 
 // 创建子切片
@@ -33,12 +34,15 @@ const userSlice = createSlice({
     },
     setToken: (state, action) => {
       state.token = action.payload;
+    },
+    setHistoryBack: (state, action) => {
+      state.historyBack = action.payload;
     }
   }
 });
 
 // 导出 action
-export const { setTheme, setUserInfo, setUserRoutes, setToken } = userSlice.actions;
+export const { setTheme, setUserInfo, setUserRoutes, setToken, setHistoryBack } = userSlice.actions;
 
 // async thunk
 export const requestData = (num) => {
@@ -69,20 +73,22 @@ export const fetchTodos = () => async(dispatch) => {
 
 };
 
+// 登录
 export const login = (userInfo) => (dispatch) => {
-  API_Login(userInfo)
-    .then((res) => {
-      const { userInfo, token } = res.data;
-      if (res.code === 200) {
-        dispatch(setUserInfo(userInfo));
-        dispatch(setToken(token));
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      // reject(err);
-    });
+  return new Promise((resolve, reject) => {
+    API_Login(userInfo)
+      .then((res) => {
+        const { userInfo, token } = res.data;
+        if (res.code === 200) {
+          dispatch(setUserInfo(userInfo));
+          dispatch(setToken(token));
+          resolve(true);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 };
-
 // 导出 reducer
 export default userSlice.reducer;

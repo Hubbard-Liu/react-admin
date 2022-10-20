@@ -2,11 +2,11 @@
  * @Author: Do not edit
  * @Date: 2022-10-20 16:57:56
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 17:33:42
- * @FilePath: \react-admin\src\utils\formatRouter.js
+ * @LastEditTime: 2022-10-20 22:50:14
+ * @FilePath: /react-admin/src/utils/formatRouter.js
  */
 import _ from 'lodash';
-import rootRouters from '@/router';
+import { rootRouters } from '@/router';
 // export type RouteProps = {
 //   name: string;
 //   icon?: React.ReactNode;

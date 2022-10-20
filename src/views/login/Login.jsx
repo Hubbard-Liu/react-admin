@@ -2,22 +2,23 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 18:09:13
- * @FilePath: \react-admin\src\views\login\Login.jsx
+ * @LastEditTime: 2022-10-20 21:12:00
+ * @FilePath: /react-admin/src/views/login/Login.jsx
  */
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Tabs, Checkbox, Form, Input } from 'antd';
 import { UserOutlined, MailOutlined } from '@ant-design/icons';
-// import to from 'await-to-js';
+import to from 'await-to-js';
 import { setTheme, login } from '@/store/modules/user/userSlice';
+import store from '@/store';
 import { useThrottle } from '@hooks/useThrottle';
 import loginStyle from './login.modules.scss';
 
 const Login = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
   // 主题设置
@@ -92,12 +93,9 @@ const Login = () => {
   const handleClick = useThrottle(async() => {
     const result = await form.validateFields().catch(err => err);
     if (result?.errorFields?.length) return;
-    const res = await login(result);
-    console.log(res);
-    // if (err) return;
-    // navigate('/main', {
-    //   state: res.data
-    // });
+    const [err] = await to(store.dispatch(login(result)));
+    if (err) return;
+    navigate('/main');
   });
 
   return (
