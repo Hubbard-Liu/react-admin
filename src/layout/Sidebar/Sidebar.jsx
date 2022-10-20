@@ -2,12 +2,13 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-17 21:43:33
- * @FilePath: /react-admin/src/layout/Sidebar/Sidebar.jsx
+ * @LastEditTime: 2022-10-19 14:04:28
+ * @FilePath: \react-admin\src\layout\Sidebar\Sidebar.jsx
  */
 import React, { memo } from 'react';
-import { Layout } from 'antd';
-const { Sider } = Layout;
+import { Layout, Menu } from 'antd';
+import routers from '@/router';
+const { Sider } = Layout; ;
 
 const Sidebar = (props) => {
   // 响应式布局
@@ -20,6 +21,19 @@ const Sidebar = (props) => {
     xxl: '1600px'
   };
 
+  const menuList = [];
+  routers.forEach(item => {
+    if (!item.hidden) {
+      menuList.push({
+        disabled: false,
+        icon: '',
+        key: item.path,
+        label: item.name,
+        title: item.name
+      });
+    }
+  });
+
   return (
     <>
       <Sider
@@ -29,7 +43,12 @@ const Sidebar = (props) => {
         collapsible
         collapsed={props.collapsed}
       >
-          Sider
+        <Menu
+          theme='dark'
+          mode='inline'
+          defaultSelectedKeys={['1']}
+          items={ menuList }
+        />
       </Sider>
     </>
   );

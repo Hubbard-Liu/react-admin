@@ -2,11 +2,11 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:13:59
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-11 14:02:05
- * @FilePath: \react-admin\src\App.js
+ * @LastEditTime: 2022-10-20 17:12:19
+ * @FilePath: \react-admin\src\App.jsx
  */
 import React, { memo, Suspense, useEffect } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useRoutes, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
 import 'antd/dist/antd.variable.min.css'; // 动态主题
@@ -27,6 +27,10 @@ function App() {
       }
     });
   }, [theme]);
+
+  const router = useLocation();
+  const { pathname } = router;
+  console.log(pathname);
 
   useNprogress();
 

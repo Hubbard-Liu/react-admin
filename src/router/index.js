@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-17 22:26:53
- * @FilePath: /react-admin/src/router/index.js
+ * @LastEditTime: 2022-10-19 15:16:22
+ * @FilePath: \react-admin\src\router\index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -24,28 +24,22 @@ const lazyLoad = (componentName) => {
 
 // 路由表
 const routers = [
-  // 重定向
-  {
-    path: '/',
-    element: <Navigate to='/main' />
-  },
   {
     path: '/login',
     name: '登录',
-    key: '/login',
+    icon: '',
+    hidden: true,
     element: lazyLoad('login/Login')
   },
   {
     path: '/',
     name: '主页',
-    key: '/',
     element: lazyLoad('Wrapper/Wrapper'),
     children: [
       {
         index: true,
         path: 'main',
         name: '主页',
-        key: '/',
         element: lazyLoad('main/Main')
       }
     ]
@@ -54,13 +48,13 @@ const routers = [
   {
     path: '/error',
     name: '错误',
-    key: '/error',
+    hidden: true,
     element: lazyLoad('error/Error')
   },
   {
     path: '*',
     name: 'No Match',
-    key: '*',
+    hidden: true,
     element: <Navigate to='/error' />
   }
 ];
