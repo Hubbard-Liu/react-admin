@@ -2,18 +2,24 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 23:09:56
- * @FilePath: /react-admin/src/layout/Sidebar/Sidebar.jsx
+ * @LastEditTime: 2022-10-24 17:50:15
+ * @FilePath: \react-admin\src\layout\Sidebar\Sidebar.jsx
  */
-import React, { memo } from 'react';
+import React, { useState, memo, useMemo, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { routers } from '@/router';
+import { menus } from '@/router';
 const { Sider } = Layout; ;
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(props.collapsed);
+  const [currentMenus, setCurrentMenus] = useState(menus);
+  console.log('Sidebar');
+  if (!menus) {
+    setCurrentMenus(menus);
+  }
 
   // 响应式布局
   const breakpoint = {
@@ -25,38 +31,18 @@ const Sidebar = (props) => {
     xxl: '1600px'
   };
 
-  const menuList = [];
-  routers.forEach(item => {
-    if (!item.hidden) {
-      const menu = {
-        disabled: false,
-        icon: '',
-        key: item.path,
-        label: item.name,
-        title: item.name
-      };
-      if (item?.children) {
-        menu.children = [];
-        item.children.forEach(child => {
-          if (!child.hidden) {
-            const menuChild = {
-              disabled: false,
-              icon: '',
-              key: child.path,
-              label: child.name,
-              title: child.name
-            };
-            menu.children.push(menuChild);
-          }
-        });
-      }
-      menuList.push(menu);
-    }
-  });
-  console.log(menuList);
+  const menuList = useMemo(() => currentMenus, [currentMenus]);
 
-  const onClick = (e) => {
-    console.log('click ', e);
+  // 用于监听 props.collapsed 改变 收缩前先关闭所有展开项 打开前先展开当前选中项
+  useEffect(() => {
+    if (!props.collapsed) {
+      setCollapsed(props.collapsed);
+    } else {
+      setCollapsed(props.collapsed);
+    }
+  }, [props.collapsed]);
+
+  const handleSelectMenu = (e) => {
     navigate(e.key);
   };
 
@@ -67,13 +53,13 @@ const Sidebar = (props) => {
         breakpoint={breakpoint}
         trigger={null}
         collapsible
-        collapsed={props.collapsed}
+        collapsed={collapsed}
       >
         <Menu
           theme='dark'
           mode='inline'
-          onClick={onClick}
-          defaultSelectedKeys={['1']}
+          onSelect={handleSelectMenu}
+          defaultSelectedKeys={['/main']}
           items={ menuList }
         />
       </Sider>

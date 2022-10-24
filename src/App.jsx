@@ -2,10 +2,10 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:13:59
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 23:14:03
- * @FilePath: /react-admin/src/App.jsx
+ * @LastEditTime: 2022-10-24 17:58:03
+ * @FilePath: \react-admin\src\App.jsx
  */
-import React, { memo, Suspense, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
@@ -14,10 +14,12 @@ import './styles/index.scss'; // 全局样式
 import 'nprogress/nprogress.css'; // 加载条
 import { rootRouters } from '@/router';
 import useNprogress from '@hooks/useNprogress';
-import useRouteGuard from '@hooks/useRouteGuard';
-import LoadingAnimation from '@/components/LoadingAnimation';
+// import useRouteGuard from '@hooks/useRouteGuard';
 
 function App() {
+  // 动态路由
+  const [currentRoute, setCurrentRoute] = useState(rootRouters);
+
   const theme = useSelector((state) => state.user.theme);
   console.log('App组件触发');
   useEffect(() => {
@@ -30,29 +32,23 @@ function App() {
   }, [theme]);
   useNprogress();
 
-  useRouteGuard();
+  // 监听路由变化
+  useEffect(() => {
+    if (currentRoute) {
+      // const resultRoute = handelEnd(handelFilterElement(deepCopy(routs)));
+      const resultRoute = currentRoute;
+      setCurrentRoute(resultRoute);
+    }
+  }, [currentRoute]);
+
+  // useRouteGuard();
+  const elements = useRoutes(currentRoute);
 
   return (
-    <Suspense fallback={<LoadingAnimation />}>
-      {/* Suspense 配合 lazy 懒加载使用 */}
-      {/* 生成路由 */}
-      { useRoutes(rootRouters) }
-      {/* { useRoutes(routers) } */}
-      {/* <Route
-        element={<Team />}
-        path='teams/:teamId'
-        loader={async({ params }) => {
-          return fetch(
-            `/fake/api/teams/${params.teamId}.json`
-          );
-        }}
-        action={async({ request }) => {
-          return updateFakeTeam(await request.formData());
-        }}
-        errorElement={<ErrorBoundary />}
-      /> */}
-    </Suspense>
+    <div style={{ width: '100%', height: '100%' }}>
+      {elements}
+    </div>
   );
 }
 
-export default memo(App);
+export default App;
