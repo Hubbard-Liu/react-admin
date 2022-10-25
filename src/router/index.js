@@ -2,12 +2,13 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-24 17:44:00
+ * @LastEditTime: 2022-10-25 10:20:08
  * @FilePath: \react-admin\src\router\index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import useRouteGuard from '@/hooks/useRouteGuard';
 
 // 懒加载
 const lazyLoad = (componentName) => {
@@ -25,11 +26,10 @@ const lazyLoad = (componentName) => {
 
 // 路由鉴权组件
 const Appraisal = ({ children }) => {
-  const reduxToken = useSelector((state) => state.user.token);
-  const token = localStorage.getItem('token') ?? reduxToken;
-  return token ? children : <Navigate to='/login' />;
+  return useRouteGuard(children);
 };
 
+// 权限路由表
 const routers = [
   {
     index: true,
@@ -63,7 +63,7 @@ const routers = [
   }
 ];
 
-// 根路由表
+// 公共权限根路由表
 const rootRouters = [
   {
     path: '/login',
@@ -93,6 +93,7 @@ const rootRouters = [
   }
 ];
 
+// 侧边栏表
 const menus = [
   {
     'id': 1,

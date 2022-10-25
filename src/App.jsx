@@ -2,10 +2,10 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:13:59
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-24 17:58:03
+ * @LastEditTime: 2022-10-25 09:28:37
  * @FilePath: \react-admin\src\App.jsx
  */
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
@@ -51,4 +51,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);
