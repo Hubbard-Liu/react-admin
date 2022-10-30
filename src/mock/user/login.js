@@ -2,8 +2,8 @@
  * @Author: Do not edit
  * @Date: 2022-10-16 18:27:36
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 17:51:36
- * @FilePath: \react-admin\src\mock\user\login.js
+ * @LastEditTime: 2022-10-30 15:56:38
+ * @FilePath: /react-admin/src/mock/user/login.js
  */
 const tokens = {
   admin: 'admin',
@@ -35,6 +35,45 @@ const users = {
   }
 };
 
+// 侧边栏表
+const menus = [
+  {
+    id: 1,
+    label: '首页',
+    key: '/main',
+    icon: 'AppstoreOutlined',
+    children: []
+  },
+  {
+    id: 2,
+    label: '数据大屏',
+    icon: 'AppstoreOutlined',
+    key: '/dashboard',
+    children: []
+  },
+  {
+    id: 3,
+    label: '关于',
+    key: '/about',
+    icon: 'AppstoreOutlined',
+    grade: 1,
+    children: [
+      {
+        id: 4,
+        label: 'aboutEmail',
+        key: '/about/aboutEmail',
+        grade: 2
+      },
+      {
+        id: 5,
+        label: 'aboutPhone',
+        key: '/about/aboutPhone',
+        grade: 2
+      }
+    ]
+  }
+];
+
 const Mock_User = {
   login: (config) => {
     const { username } = JSON.parse(config.body);
@@ -52,6 +91,24 @@ const Mock_User = {
       data: {
         token,
         userInfo: users[username]
+      }
+    };
+  },
+  getMenu: (config) => {
+    // console.log(config);
+    // const { token } = JSON.parse(config.body);
+    // if (!token) {
+    //   return {
+    //     code: 401,
+    //     msg: '用户权限不存在',
+    //     data: null
+    //   };
+    // }
+    return {
+      code: 200,
+      msg: '成功',
+      data: {
+        menus
       }
     };
   }

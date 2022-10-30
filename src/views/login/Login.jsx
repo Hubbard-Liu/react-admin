@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:31:18
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-20 21:12:00
+ * @LastEditTime: 2022-10-30 21:08:43
  * @FilePath: /react-admin/src/views/login/Login.jsx
  */
 import React, { memo } from 'react';
@@ -90,6 +90,7 @@ const Login = () => {
     }
   ];
 
+  // 登录
   const handleClick = useThrottle(async() => {
     const result = await form.validateFields().catch(err => err);
     if (result?.errorFields?.length) return;

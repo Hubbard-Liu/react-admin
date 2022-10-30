@@ -2,13 +2,13 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-25 10:20:08
- * @FilePath: \react-admin\src\router\index.js
+ * @LastEditTime: 2022-10-30 21:22:19
+ * @FilePath: /react-admin/src/router/index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
-import useRouteGuard from '@/hooks/useRouteGuard';
+// import useRouteGuard from '@/hooks/useRouteGuard';
 
 // 懒加载
 const lazyLoad = (componentName) => {
@@ -24,36 +24,18 @@ const lazyLoad = (componentName) => {
 // const Login = lazy(() => import(/* webpackChunkName: "login" */ '@/views/login/Login'));
 // const Home = lazy(() => import(/* webpackChunkName: "home" */ '@/views/home/Home'));
 
-// 路由鉴权组件
-const Appraisal = ({ children }) => {
-  return useRouteGuard(children);
-};
+// 方案二: 路由鉴权组件
+// const Appraisal = ({ children }) => {
+//   const { token } = useSelector((state) => state.user);
+//   // return useRouteGuard(children);
+//   return token ? children : <Navigate to='/login' />;
+// };
 
-// 权限路由表
-const routers = [
+// 权限路由表: 根据后台菜单动态加载
+const authRouters = [
   {
-    index: true,
-    path: 'main',
-    name: '主页',
-    element: lazyLoad('main/Main')
-  },
-  {
-    index: true,
-    path: 'dashboard',
-    name: '数据大屏',
-    element: lazyLoad('dashboard/Dashboard')
-  },
-  {
-    index: true,
-    path: 'about/aboutEmail',
-    name: 'aboutEmail',
-    element: lazyLoad('about/aboutEmail/AboutEmail')
-  },
-  {
-    index: true,
-    path: 'about/aboutPhone',
-    name: 'aboutPhone',
-    element: lazyLoad('about/aboutPhone/AboutPhone')
+    path: '',
+    element: <Navigate to='home' />
   },
   {
     path: '*',
@@ -75,8 +57,8 @@ const rootRouters = [
   {
     path: '/',
     name: '主页',
-    element: <Appraisal>{ lazyLoad('Wrapper/Wrapper') }</Appraisal>,
-    children: routers
+    element: lazyLoad('Wrapper/Wrapper'),
+    children: []
   },
   // 404
   {
@@ -136,4 +118,4 @@ const menus = [
   }
 ];
 
-export { routers, rootRouters, menus };
+export { authRouters, rootRouters, menus, lazyLoad };

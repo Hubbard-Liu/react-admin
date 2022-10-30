@@ -18,8 +18,25 @@
 
   .wrapper-center {
     &-header {
+      display: flex;
       padding: 0;
-      background-color: #8cbbe7;
+      background-color: #fff;
+
+      .nav-target {
+        height: 100%;
+        font-size: 18px;
+        padding: 22px 12px;
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .nav-right {
+        margin-right: 20px;
+      }
     }
     &-content {}
     &-footer {}
