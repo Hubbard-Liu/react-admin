@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 22:06:32
+ * @LastEditTime: 2022-11-01 22:08:52
  * @FilePath: /react-admin/src/layout/Sidebar/Sidebar.jsx
  */
 import React, { useState, memo, useMemo, useEffect } from 'react';
@@ -10,9 +10,15 @@ import { Layout, Menu } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import { cloneDeep } from '@/utils/lodashChunk';
+import * as Icon from '@ant-design/icons';
 
 // import { menus } from '@/router';
 const { Sider } = Layout; ;
+
+// 动态加载图标
+const createAntdIcon = (iconName) => {
+  return React.createElement(Icon[iconName]);
+};
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
@@ -28,6 +34,7 @@ const Sidebar = (props) => {
         return {
           key: item.key,
           label: item.label,
+          icon: createAntdIcon(item.icon),
           children
         };
       });

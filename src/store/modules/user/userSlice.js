@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 16:19:00
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 17:25:21
+ * @LastEditTime: 2022-11-01 22:10:57
  * @FilePath: /react-admin/src/store/modules/user/userSlice.js
  */
 import { createSlice } from '@reduxjs/toolkit';
@@ -57,9 +57,6 @@ export const {
 } = userSlice.actions;
 
 // async thunk
-// 请求动态路由
-export const asyncRouter = () => {};
-
 // 登录
 export const login = (userInfo) => (dispatch) => {
   return new Promise((resolve, reject) => {
@@ -83,11 +80,9 @@ export const getMenu = () => (dispatch) => {
   return new Promise(async(resolve, reject) => {
     try {
       const res = await API_getMenu();
-      console.log('API_getMenu', res);
       if (res.code === 200) {
         const routers = await formatRouter(res.data.menus);
         dispatch(setUserMenu(res.data.menus));
-        console.log(routers);
         dispatch(setUserRoutes(routers));
         resolve(true);
       }
