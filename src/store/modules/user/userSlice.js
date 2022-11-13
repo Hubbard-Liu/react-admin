@@ -2,12 +2,13 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 16:19:00
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-11-01 22:10:57
+ * @LastEditTime: 2022-11-13 21:47:50
  * @FilePath: /react-admin/src/store/modules/user/userSlice.js
  */
 import { createSlice } from '@reduxjs/toolkit';
 import { API_Login, API_getMenu } from '@/api/user/login';
 import { formatRouter } from '@/utils/formatRouter';
+import storage from '@/utils/storage';
 
 // 初始化参数
 const initialState = {
@@ -15,8 +16,9 @@ const initialState = {
   userInfo: {},
   userRoutes: [],
   userMenu: [],
-  token: '',
-  historyBack: ''
+  token: storage.get('token') || '',
+  historyBack: '',
+  currentPath: ''
 };
 
 // 创建子切片
@@ -28,7 +30,6 @@ const userSlice = createSlice({
       state.theme = action.payload;
     },
     setUserInfo: (state, action) => {
-      console.log(action.payload);
       state.userInfo = action.payload;
     },
     setUserRoutes: (state, action) => {
@@ -42,6 +43,9 @@ const userSlice = createSlice({
     },
     setUserMenu: (state, action) => {
       state.userMenu = action.payload;
+    },
+    setCurrentPath: (state, action) => {
+      state.currentPath = action.payload;
     }
   }
 });
@@ -53,7 +57,8 @@ export const {
   setUserRoutes,
   setToken,
   setHistoryBack,
-  setUserMenu
+  setUserMenu,
+  setCurrentPath
 } = userSlice.actions;
 
 // async thunk
@@ -64,6 +69,7 @@ export const login = (userInfo) => (dispatch) => {
       .then((res) => {
         const { userInfo, token } = res.data;
         if (res.code === 200) {
+          storage.set('token', token);
           dispatch(setUserInfo(userInfo));
           dispatch(setToken(token));
           resolve(true);
@@ -82,8 +88,8 @@ export const getMenu = () => (dispatch) => {
       const res = await API_getMenu();
       if (res.code === 200) {
         const routers = await formatRouter(res.data.menus);
-        dispatch(setUserMenu(res.data.menus));
-        dispatch(setUserRoutes(routers));
+        await dispatch(setUserMenu(res.data.menus));
+        await dispatch(setUserRoutes(routers));
         resolve(true);
       }
     } catch (error) {

@@ -2,13 +2,11 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:16:25
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 21:22:19
+ * @LastEditTime: 2022-11-13 21:05:27
  * @FilePath: /react-admin/src/router/index.js
  */
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import useRouteGuard from '@/hooks/useRouteGuard';
 
 // 懒加载
 const lazyLoad = (componentName) => {
@@ -22,7 +20,7 @@ const lazyLoad = (componentName) => {
 };
 // const Wrapper = lazy(() => import(/* webpackChunkName: "Wrapper" */ '@/layout/Wrapper/Wrapper'));
 // const Login = lazy(() => import(/* webpackChunkName: "login" */ '@/views/login/Login'));
-// const Home = lazy(() => import(/* webpackChunkName: "home" */ '@/views/home/Home'));
+// const Main = lazy(() => import(/* webpackChunkName: "Main" */ '@/views/main/Main'));
 
 // 方案二: 路由鉴权组件
 // const Appraisal = ({ children }) => {
@@ -33,10 +31,15 @@ const lazyLoad = (componentName) => {
 
 // 权限路由表: 根据后台菜单动态加载
 const authRouters = [
-  {
-    path: '',
-    element: <Navigate to='home' />
-  },
+  // {
+  //   path: '/main',
+  //   element: <Navigate to='main' />
+  // },
+  // {
+  //   path: '/main',
+  //   name: 'Main'
+  //   // element: lazyLoad('main/Main')
+  // },
   {
     path: '*',
     name: 'No Match',
@@ -58,7 +61,7 @@ const rootRouters = [
     path: '/',
     name: '主页',
     element: lazyLoad('Wrapper/Wrapper'),
-    children: []
+    children: authRouters
   },
   // 404
   {

@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-13 23:03:42
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-16 19:07:41
+ * @LastEditTime: 2022-11-06 21:24:11
  * @FilePath: /react-admin/src/utils/request/axios.js
  */
 import axios from 'axios';
@@ -33,7 +33,7 @@ class Axios {
     // 全局拦截器
     this.instance.interceptors.request.use(
       (res) => {
-        console.log('全局请求拦截器');
+        // console.log('全局请求拦截器');
         if (this.showLoading && !this.loading) {
           this.loading = useLoadingSpin();
         }
@@ -44,7 +44,7 @@ class Axios {
     );
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('全局相应拦截器');
+        // console.log('全局相应拦截器');
         this.loading?.close();
         this.loading = null;
         const { code } = res.data;

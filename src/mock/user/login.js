@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-16 18:27:36
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 15:56:38
+ * @LastEditTime: 2022-11-13 22:16:26
  * @FilePath: /react-admin/src/mock/user/login.js
  */
 const tokens = {
@@ -41,13 +41,13 @@ const menus = [
     id: 1,
     label: '首页',
     key: '/main',
-    icon: 'AppstoreOutlined',
+    icon: 'HomeOutlined',
     children: []
   },
   {
     id: 2,
     label: '数据大屏',
-    icon: 'AppstoreOutlined',
+    icon: 'DesktopOutlined',
     key: '/dashboard',
     children: []
   },
@@ -55,7 +55,7 @@ const menus = [
     id: 3,
     label: '关于',
     key: '/about',
-    icon: 'AppstoreOutlined',
+    icon: 'PhoneOutlined',
     grade: 1,
     children: [
       {

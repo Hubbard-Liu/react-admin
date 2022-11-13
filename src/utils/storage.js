@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-02-08 14:15:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-27 22:10:24
+ * @LastEditTime: 2022-11-06 21:08:53
  * @FilePath: /react-admin/src/utils/storage.js
  */
 // 默认缓存期限

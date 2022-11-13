@@ -2,13 +2,13 @@
  * @Author: Do not edit
  * @Date: 2022-10-17 17:45:41
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-11-01 22:08:52
+ * @LastEditTime: 2022-11-13 22:09:30
  * @FilePath: /react-admin/src/layout/Sidebar/Sidebar.jsx
  */
 import React, { useState, memo, useMemo, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 // import { cloneDeep } from '@/utils/lodashChunk';
 import * as Icon from '@ant-design/icons';
 
@@ -22,9 +22,12 @@ const createAntdIcon = (iconName) => {
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(props.collapsed);
   const [currentMenus, setCurrentMenus] = useState([]);
   const userMenu = useSelector((state) => state.user.userMenu, shallowEqual);
+  const router = useLocation();
+  const selectOpen = router.pathname;
 
   console.log('Sidebar');
   useEffect(() => {
@@ -41,7 +44,11 @@ const Sidebar = (props) => {
       setCurrentMenus(menus);
     }
   }, [userMenu]);
-
+  // useEffect(() => {
+  //   if (currentPath) {
+  //     setSelectPath(currentPath);
+  //   }
+  // }, [currentPath]);
   // 响应式布局
   const breakpoint = {
     xs: '480px',
@@ -64,6 +71,7 @@ const Sidebar = (props) => {
   }, [props.collapsed]);
 
   const handleSelectMenu = (e) => {
+    // dispatch(setCurrentPath(e.key));
     navigate(e.key);
   };
 
@@ -80,7 +88,7 @@ const Sidebar = (props) => {
           theme='dark'
           mode='inline'
           onSelect={handleSelectMenu}
-          defaultSelectedKeys={['/main']}
+          defaultSelectedKeys={[selectOpen]}
           items={ menuList }
         />
       </Sider>

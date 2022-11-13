@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-20 16:57:56
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 21:20:16
+ * @LastEditTime: 2022-11-13 21:22:05
  * @FilePath: /react-admin/src/utils/formatRouter.js
  */
 import { lazyLoad, rootRouters, authRouters } from '@/router';
@@ -87,4 +87,38 @@ export const asyncRoute = (objRoutes) => {
 export const updateRoute = (routes) => {
   rootRouters[1].children = [...routes, ...authRouters];
   return rootRouters;
+};
+
+// 页面初始化注册加载全部路由
+export const allRouters = () => {
+  const RouterKeys = require.context('@/views', true, /\.jsx$/);
+  const allRouter = [];
+  /**
+   * "main/Main"
+    "login/Login"
+    "error/Error"
+    "dashboard/Dashboard"
+    "about/aboutPhone/AboutPhone"
+    "about/aboutEmail/AboutEmail"
+   */
+  RouterKeys.keys().forEach((item) => {
+    const path = item.match(/(?<=.\/)(\w|\/)*/);
+    allRouter.unshift(path[0]);
+  });
+
+  const mapRoute = (path) => {
+    const name = path.match(/(\w|\/)*(?=\/)/);
+    return {
+      element: lazyLoad(path),
+      name: name[0],
+      path: name[0]
+    };
+  };
+
+  // 1.返回动态路由
+  const currentRoutes = allRouter.map((path) => {
+    return mapRoute(path);
+  });
+
+  return currentRoutes;
 };

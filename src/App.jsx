@@ -2,7 +2,7 @@
  * @Author: Do not edit
  * @Date: 2022-10-10 14:13:59
  * @LastEditors: LiuYu
- * @LastEditTime: 2022-10-30 21:28:14
+ * @LastEditTime: 2022-11-13 22:12:18
  * @FilePath: /react-admin/src/App.jsx
  */
 import React, { memo, useState, useEffect } from 'react';
@@ -13,18 +13,23 @@ import 'antd/dist/antd.variable.min.css'; // 动态主题
 import './styles/index.scss'; // 全局样式
 import 'nprogress/nprogress.css'; // 加载条
 import { cloneDeep } from '@/utils/lodashChunk';
-import { rootRouters } from '@/router';
+// import { rootRouters } from '@/router';
 import useNprogress from '@hooks/useNprogress';
 import { asyncRoute, updateRoute } from '@/utils/formatRouter';
 import RouteGuard from '@/router/RouteGuard';
 import useBeforeEach from '@/router/useBeforeEach';
+// import { allRouters } from '@/utils/formatRouter';
+
+// 第一次初始化默认全局路由
+// const rootRouters = updateRoute(allRouters());
 
 function App() {
   // 动态路由
-  const [currentRoute, setCurrentRoute] = useState(rootRouters);
-
+  // console.log(updateRoute(asyncRoute(allRouters())));
+  const [currentRoute, setCurrentRoute] = useState([]);
+  const { theme } = useSelector((state) => state.user); // historyBack
   const userRoutes = useSelector((state) => state.user.userRoutes, shallowEqual);
-  const theme = useSelector((state) => state.user.theme);
+
   console.log('App组件触发');
   useEffect(() => {
     // 动态主题
